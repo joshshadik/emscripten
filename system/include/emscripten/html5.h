@@ -355,6 +355,23 @@ extern EMSCRIPTEN_RESULT emscripten_set_touchend_callback(const char *target, vo
 extern EMSCRIPTEN_RESULT emscripten_set_touchmove_callback(const char *target, void *userData, EM_BOOL useCapture, em_touch_callback_func callback);
 extern EMSCRIPTEN_RESULT emscripten_set_touchcancel_callback(const char *target, void *userData, EM_BOOL useCapture, em_touch_callback_func callback);
 
+typedef struct GamepadVector3 {
+    float x, y, z;
+} GamepadVector3;
+
+typedef struct GamepadQuaternion {
+    float x, y, z, w;
+} GamepadQuaternion;
+
+typedef struct EmscriptenGamepadPose {
+  GamepadVector3 position;
+  GamepadVector3 linearVelocity;
+  GamepadVector3 linearAcceleration;
+  GamepadQuaternion orientation;
+  GamepadVector3 angularVelocity;
+  GamepadVector3 angularAcceleration;
+  int poseFlags;
+} EmscriptenGamepadPose;
 
 typedef struct EmscriptenGamepadEvent {
   double timestamp;
@@ -367,6 +384,8 @@ typedef struct EmscriptenGamepadEvent {
   long index;
   EM_UTF8 id[EM_HTML5_MEDIUM_STRING_LEN_BYTES];
   EM_UTF8 mapping[EM_HTML5_MEDIUM_STRING_LEN_BYTES];
+  int hand;
+  EmscriptenGamepadPose pose;
 } EmscriptenGamepadEvent;
 
 
