@@ -1360,6 +1360,26 @@
               "metaKey",
               "touches"
             ],
+            "GamepadVector3": [
+                "x",
+                "y",
+                "z"
+            ],
+            "GamepadQuaternion": [
+                "x",
+                "y",
+                "z",
+                "w"
+            ],
+            "EmscriptenGamepadPose": [
+                { "position": [ "x", "y", "z" ] },
+                { "linearVelocity": [ "x", "y", "z" ] },
+                { "linearAcceleration": [ "x", "y", "z" ] },
+                { "orientation": [ "x", "y", "z", "w" ] },
+                { "angularVelocity": [ "x", "y", "z" ] },
+                { "angularAcceleration": [ "x", "y", "z" ] },
+                "poseFlags"
+            ],
             "EmscriptenGamepadEvent": [
               "timestamp",
               "axis",
@@ -1370,7 +1390,17 @@
               "numAxes",
               "numButtons",
               "id",
-              "mapping"
+              "mapping",
+              "hand",
+              { "pose": [
+                { "position": [ "x", "y", "z" ] },
+                { "linearVelocity": [ "x", "y", "z" ] },
+                { "linearAcceleration": [ "x", "y", "z" ] },
+                { "orientation": [ "x", "y", "z", "w" ] },
+                { "angularVelocity": [ "x", "y", "z" ] },
+                { "angularAcceleration": [ "x", "y", "z" ] },
+                "poseFlags"
+              ]}
             ],
             "EmscriptenBatteryEvent": [
               "chargingTime",

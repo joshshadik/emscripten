@@ -947,6 +947,71 @@ var LibraryJSEvents = {
       {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.numButtons, 'e.buttons.length', 'i32') }}};
       stringToUTF8(e.id, eventStruct + {{{ C_STRUCTS.EmscriptenGamepadEvent.id }}}, {{{ cDefine('EM_HTML5_MEDIUM_STRING_LEN_BYTES') }}});
       stringToUTF8(e.mapping, eventStruct + {{{ C_STRUCTS.EmscriptenGamepadEvent.mapping }}}, {{{ cDefine('EM_HTML5_MEDIUM_STRING_LEN_BYTES') }}});
+      
+      var handValue = 0;
+      if( 'hand' in e )
+      {
+        handValue = e.hand == "left" ? 1 : ( (e.hand == "right") ? 2 : 3 );
+      }
+
+      {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.hand, 'handValue', 'i32') }}};
+    
+
+      var poseFlags = 0;
+      if('pose' in e )
+      {
+        if (e.pose.hasPosition && e.pose.position !== null) {
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.position.x, 'e.pose.position[0]', 'float') }}};
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.position.y, 'e.pose.position[1]', 'float') }}};
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.position.z, 'e.pose.position[2]', 'float') }}};
+    
+          poseFlags |= 1;
+        }
+    
+        if (e.pose.linearVelocity !== null) {
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.linearVelocity.x, 'e.pose.linearVelocity[0]', 'float') }}};
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.linearVelocity.y, 'e.pose.linearVelocity[1]', 'float') }}};
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.linearVelocity.z, 'e.pose.linearVelocity[2]', 'float') }}};
+    
+          poseFlags |= 2;
+        }
+    
+        if (e.pose.linearAcceleration !== null) {
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.linearAcceleration.x, 'e.pose.linearAcceleration[0]', 'float') }}};
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.linearAcceleration.y, 'e.pose.linearAcceleration[1]', 'float') }}};
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.linearAcceleration.z, 'e.pose.linearAcceleration[2]', 'float') }}};
+    
+          poseFlags |= 4;
+        }
+    
+        if (e.pose.hasOrientation && e.pose.orientation !== null) {
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.orientation.x, 'e.pose.orientation[0]', 'float') }}};
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.orientation.y, 'e.pose.orientation[1]', 'float') }}};
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.orientation.z, 'e.pose.orientation[2]', 'float') }}};
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.orientation.w, 'e.pose.orientation[3]', 'float') }}};
+    
+            poseFlags |= 8;
+        }
+    
+        if (e.pose.angularVelocity !== null) {
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.angularVelocity.x, 'e.pose.angularVelocity[0]', 'float') }}};
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.angularVelocity.y, 'e.pose.angularVelocity[1]', 'float') }}};
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.angularVelocity.z, 'e.pose.angularVelocity[2]', 'float') }}};
+    
+          poseFlags |= 16;
+        }
+    
+        if (e.pose.angularAcceleration !== null) {
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.angularAcceleration.x, 'e.pose.angularAcceleration[0]', 'float') }}};
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.angularAcceleration.y, 'e.pose.angularAcceleration[1]', 'float') }}};
+          {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.angularAcceleration.z, 'e.pose.angularAcceleration[2]', 'float') }}};
+    
+          poseFlags |= 32;
+        }
+      }
+
+      {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.poseFlags, 'poseFlags', 'i32') }}};
+
     },
 
     registerGamepadEventCallback: function(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString) {
