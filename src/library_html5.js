@@ -958,7 +958,7 @@ var LibraryJSEvents = {
     
 
       var poseFlags = 0;
-      if('pose' in e )
+      if('pose' in e && e.pose != null )
       {
         if (e.pose.hasPosition && e.pose.position !== null) {
           {{{ makeSetValue('eventStruct', C_STRUCTS.EmscriptenGamepadEvent.pose.position.x, 'e.pose.position[0]', 'float') }}};
